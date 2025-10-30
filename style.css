@@ -1,0 +1,128 @@
+body {
+  background-color: #FBCFE8;
+  text-align: center;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+      /* background-color: whitesmoke; */
+      color: #fb6f92;
+      font-family: "Poppins", sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin: 0;
+    }
+
+    /* Título */
+    h1 {
+      font-size: 2rem;
+      text-align: center;
+      color: #ff5c8d;
+      margin-bottom: 20px;
+      letter-spacing: 1px;
+      text-shadow: 0 0 8px rgba(255, 92, 141, 0.8);
+      animation: pulse 2.5s infinite ease-in-out;
+    }
+
+    /* Caixa principal do contador */
+    #timer {
+      font-size: 1.1rem;
+      background: rgba(255, 255, 255, 0.07); 
+      background-color: azure;
+      padding: 25px 35px;
+      border-radius: 20px;
+      box-shadow: 0 0 20px rgba(255, 92, 141, 0.25);
+      backdrop-filter: blur(8px);
+      transition: all 0.3s ease;
+    }
+
+    #timer:hover {
+      box-shadow: 0 0 25px rgba(255, 92, 141, 0.5);
+      transform: scale(1.02);
+    }
+
+    #years {
+      margin-bottom: 5px;
+    }
+
+    #date {
+      margin-top: 15px;
+      color: dimgray;
+      font-size: 1rem;
+    }
+
+    span {
+      color: #ffb3c6;
+      font-weight: 500;
+    }
+
+    /* Animação suave de brilho */
+    @keyframes pulse {
+      0%, 100% {
+        text-shadow: 0 0 8px rgba(255, 92, 141, 0.8);
+      }
+      50% {
+        text-shadow: 0 0 18px rgba(255, 92, 141, 1);
+      }
+    }
+
+#heart{
+  width: 50vw;
+  height: auto;
+  text-align: center;
+}
+
+
+
+
+ .carrossel-container {
+    position: relative;
+    width: 90%;
+    max-width: 700px;
+    height: 400px;
+    margin: 50px auto;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+    touch-action: pan-y;
+  }
+
+  .carrossel-slides {
+    display: flex;
+    height: 100%;
+    transition: transform 0.8s ease-in-out;
+  }
+
+  .carrossel-slides img {
+    flex: 0 0 100%;
+    height: 100%;
+    object-fit: cover;
+    user-select: none;
+    pointer-events: none;
+  }
+
+  .dots {
+    text-align: center;
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+  }
+
+  .dot {
+    display: inline-block;
+    height: 10px;
+    width: 10px;
+    margin: 0 4px;
+    background-color: rgba(255,255,255,0.6);
+    border-radius: 50%;
+    transition: background-color 0.3s;
+  }
+
+  .active {
+    background-color: white;
+  }
