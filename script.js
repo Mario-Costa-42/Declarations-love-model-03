@@ -73,3 +73,160 @@ const slides = document.getElementById("slides");
     startAuto();
 
 
+// parte da mensagem
+
+ // Criar estrelas cintilantes
+        const starsContainer = document.getElementById('stars');
+        const starCount = 50;
+        
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement('div');
+            star.classList.add('star');
+            
+            // Posição aleatória
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            
+            // Tamanho aleatório
+            const size = Math.random() * 3;
+            
+            // Duração da animação aleatória
+            const duration = 3 + Math.random() * 7;
+            const delay = Math.random() * 5;
+            
+            star.style.left = `${left}%`;
+            star.style.top = `${top}%`;
+            star.style.width = `${size}px`;
+            star.style.height = `${size}px`;
+            star.style.animationDuration = `${duration}s`;
+            star.style.animationDelay = `${delay}s`;
+            
+            starsContainer.appendChild(star);
+        }
+
+// Fim da parte da mensagem
+
+// raspe para revelar
+
+const svg = document.getElementById('svgStage');
+    const maskImage = document.getElementById('maskImage');
+
+    const maskCanvas = document.createElement('canvas');
+    const MASK_W = 800, MASK_H = 800;
+    maskCanvas.width = MASK_W; maskCanvas.height = MASK_H;
+    const mctx = maskCanvas.getContext('2d');
+
+    function clearMask() {
+      mctx.clearRect(0,0,MASK_W,MASK_H);
+      mctx.fillStyle = 'black';
+      mctx.fillRect(0,0,MASK_W,MASK_H);
+      updateMaskImage();
+    }
+
+    clearMask();
+
+    function updateMaskImage(){
+      const url = maskCanvas.toDataURL('image/png');
+      maskImage.setAttribute('href', url);
+    }
+
+    function drawHeartOnMask(x, y, s){
+      mctx.save();
+      mctx.beginPath();
+      const topCurveHeight = s * 0.3;
+      mctx.moveTo(x, y + topCurveHeight);
+      mctx.bezierCurveTo(x, y, x - s/2, y, x - s/2, y + topCurveHeight);
+      mctx.bezierCurveTo(x - s/2, y + (s+topCurveHeight)/2, x, y + (s+topCurveHeight)/1.1, x, y + s);
+      mctx.bezierCurveTo(x, y + (s+topCurveHeight)/1.1, x + s/2, y + (s+topCurveHeight)/2, x + s/2, y + topCurveHeight);
+      mctx.bezierCurveTo(x + s/2, y, x, y, x, y + topCurveHeight);
+      mctx.closePath();
+      mctx.fillStyle = 'white';
+      mctx.fill();
+      mctx.restore();
+      updateMaskImage();
+    }
+
+    function clientToSvg(evt){
+      const pt = svg.createSVGPoint();
+      if (evt.touches && evt.touches[0]) { pt.x = evt.touches[0].clientX; pt.y = evt.touches[0].clientY; }
+      else { pt.x = evt.clientX; pt.y = evt.clientY; }
+      const svgP = pt.matrixTransform(svg.getScreenCTM().inverse());
+      return { x: svgP.x, y: svgP.y };
+    }
+
+    let painting = false;
+    const BRUSH_SIZE = 80;
+
+    function pointerDown(e){
+      painting = true; if (e.type === 'touchstart') e.preventDefault();
+      const p = clientToSvg(e);
+      drawHeartOnMask(p.x, p.y, BRUSH_SIZE);
+    }
+    function pointerMove(e){
+      if (!painting) return;
+      const p = clientToSvg(e);
+      drawHeartOnMask(p.x, p.y, BRUSH_SIZE);
+    }
+    function pointerUp(){ painting = false; }
+
+    svg.addEventListener('pointerdown', pointerDown);
+    svg.addEventListener('pointermove', pointerMove);
+    window.addEventListener('pointerup', pointerUp);
+
+    svg.addEventListener('touchstart', pointerDown, {passive:false});
+    svg.addEventListener('touchmove', pointerMove, {passive:false});
+    window.addEventListener('touchend', pointerUp);
+
+    svg.addEventListener('dragstart', e=>e.preventDefault());
+
+// Fim do raspe para revelar
+
+//tocar audio
+
+document.addEventListener("DOMContentLoaded", function() {
+  const song = document.getElementById('song01');
+  song.volume = 0.9;
+  song.play().catch(() => {}); // evita erro se autoplay for bloqueado
+});
+
+//chuva de corações
+
+ function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤';
+            
+            // Posição aleatória no topo
+            heart.style.left = Math.random() * 100 + 'vw';
+            
+            // Duração aleatória da animação
+            const duration = Math.random() * 8 + 8;
+            heart.style.animationDuration = duration + 's';
+            
+            // Tamanho aleatório
+            const size = Math.random() * 20 + 18;
+            heart.style.fontSize = size + 'px';
+            
+            // Atraso aleatório
+            heart.style.animationDelay = Math.random() * 5 + 's';
+            
+            // Opacidade um pouco maior para cores mais fortes
+            heart.style.opacity = Math.random() * 0.3 + 0.7;
+            
+            document.getElementById('heartsContainer').appendChild(heart);
+            
+            // Remover o coração após a animação
+            setTimeout(() => {
+                if (heart.parentNode) {
+                    heart.parentNode.removeChild(heart);
+                }
+            }, duration * 1000);
+        }
+        
+        function startHearts() {
+            // Criar corações em intervalos regulares
+            setInterval(createHeart, 800);
+        }
+        
+        // Iniciar quando a página carregar
+        window.onload = startHearts;
