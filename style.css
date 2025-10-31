@@ -80,49 +80,72 @@ body {
 
 
 
- .carrossel-container {
+  .carrossel {
     position: relative;
-    width: 90%;
-    max-width: 700px;
-    height: 400px;
-    margin: 50px auto;
+    width: 320px;
+    height: 320px;
+    border-radius: 50%;
     overflow: hidden;
-    border-radius: 15px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-    touch-action: pan-y;
+    box-shadow: 0 0 40px rgba(0,0,0,0.25);
+    margin: 0 auto;
   }
 
-  .carrossel-slides {
+  .slides {
     display: flex;
+    width: 100%;
     height: 100%;
-    transition: transform 0.8s ease-in-out;
+    transition: transform 0.8s ease;
   }
 
-  .carrossel-slides img {
-    flex: 0 0 100%;
+  .slides img {
+    width: 100%;
     height: 100%;
     object-fit: cover;
-    user-select: none;
-    pointer-events: none;
+    flex-shrink: 0;
   }
+
+  .btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(255,255,255,0.7);
+    border: none;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    cursor: pointer;
+    font-size: 1.3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s;
+  }
+
+  .btn:hover {
+    background: rgba(255,255,255,0.9);
+  }
+
+  #prev { left: 10px; }
+  #next { right: 10px; }
 
   .dots {
-    text-align: center;
     position: absolute;
-    bottom: 10px;
-    width: 100%;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
   }
 
-  .dot {
-    display: inline-block;
-    height: 10px;
+  .dots span {
     width: 10px;
-    margin: 0 4px;
-    background-color: rgba(255,255,255,0.6);
+    height: 10px;
     border-radius: 50%;
-    transition: background-color 0.3s;
+    background: rgba(255,255,255,0.5);
+    transition: background 0.3s;
   }
 
-  .active {
-    background-color: white;
+  .dots .active {
+    background: white;
   }
+

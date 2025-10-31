@@ -26,68 +26,50 @@
     setInterval(updateCounter, 1000);
     
 
+//script do carrossel 
 
-const slides = document.querySelector('.carrossel-slides');
-  const dots = document.querySelectorAll('.dot');
-  const total = 6;
-  let index = 0;
-  let startX = 0;
-  let endX = 0;
-  let intervalo;
+const slides = document.getElementById("slides");
+    const total = slides.children.length;
+    let index = 0;
+    let auto;
 
-  function mostrarSlide() {
-    slides.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach(dot => dot.classList.remove('active'));
-    dots[index].classList.add('active');
-  }
-
-  function proximoSlide() {
-    index = (index + 1) % total;
-    mostrarSlide();
-  }
-
-  function anteriorSlide() {
-    index = (index - 1 + total) % total;
-    mostrarSlide();
-  }
-
-  function iniciarAutoPlay() {
-    intervalo = setInterval(proximoSlide, 3000);
-  }
-
-  function pararAutoPlay() {
-    clearInterval(intervalo);
-  }
-
-  // Detecta arraste (touch e mouse)
-  slides.addEventListener('touchstart', e => {
-    startX = e.touches[0].clientX;
-    pararAutoPlay();
-  });
-
-  slides.addEventListener('touchend', e => {
-    endX = e.changedTouches[0].clientX;
-    handleGesture();
-    iniciarAutoPlay();
-  });
-
-  slides.addEventListener('mousedown', e => {
-    startX = e.clientX;
-    pararAutoPlay();
-  });
-
-  slides.addEventListener('mouseup', e => {
-    endX = e.clientX;
-    handleGesture();
-    iniciarAutoPlay();
-  });
-
-  function handleGesture() {
-    const diff = endX - startX;
-    if (Math.abs(diff) > 50) { // só muda se o arraste for suficiente
-      if (diff < 0) proximoSlide();
-      else anteriorSlide();
+    const dotsContainer = document.getElementById("dots");
+    for (let i = 0; i < total; i++) {
+      const dot = document.createElement("span");
+      if (i === 0) dot.classList.add("active");
+      dotsContainer.appendChild(dot);
     }
-  }
+    const dots = dotsContainer.children;
 
-iniciarAutoPlay();
+    function updateCarousel() {
+      slides.style.transform = `translateX(-${index * 100}%)`;
+      [...dots].forEach((d, i) => d.classList.toggle("active", i === index));
+    }
+
+    function nextSlide() {
+      index = (index + 1) % total;
+      updateCarousel();
+    }
+
+    function prevSlide() {
+      index = (index - 1 + total) % total;
+      updateCarousel();
+    }
+
+    document.getElementById("next").onclick = () => {
+      clearInterval(auto);
+      nextSlide();
+      startAuto();
+    };
+    document.getElementById("prev").onclick = () => {
+      clearInterval(auto);
+      prevSlide();
+      startAuto();
+    };
+
+    function startAuto() {
+      auto = setInterval(nextSlide, 3000);
+    }
+    startAuto();
+
+
